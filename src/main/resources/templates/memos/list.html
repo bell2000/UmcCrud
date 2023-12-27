@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memo List</title>
+</head>
+<body>
+<h2>Memo List</h2>
+<form th:action="@{/memos}" method="get">
+    <label for="keyword">Search:</label>
+    <input type="text" id="keyword" name="keyword" th:value="${keyword}">
+    <button type="submit">Search</button>
+</form>
+
+<form th:action="@{/memos}" method="get">
+    <select name="order" onchange="this.form.submit()">
+        <option value="desc" th:selected="${order == 'desc'}">Newest First</option>
+        <option value="asc" th:selected="${order == 'asc'}">Oldest First</option>
+    </select>
+</form>
+
+<ul>
+    <li th:each="memo : ${memos}">
+        <strong th:text="${memo.title}"></strong>
+        <span th:text="${memo.content}"></span>
+        <a th:href="@{/memos/edit/{id}(id=${memo.id})}">Edit</a>
+        <a th:href="@{/memos/delete/{id}(id=${memo.id})}">Delete</a>
+    </li>
+</ul>
+<!-- 생략 -->
+<div th:if="${memos.totalPages > 1}">
+    <ul>
+        <li th:each="pageNumber : ${#numbers.sequence(1, memos.totalPages)}">
+            <a th:href="@{/memos(page=${pageNumber}, size=${size}, keyword=${keyword}, order=${order})}"
+               th:text="${pageNumber}"
+               th:class="${pageNumber == page} ? 'active' : ''"></a>
+        </li>
+    </ul>
+</div>
+<!-- 생략 -->
+
+
+<a th:href="@{/memos/new}">Add Memo</a>
+
+<form th:action="@{/memos/deleteAll}" method="post" onsubmit="return confirm('진짜로 다 지울거에요 진짜로?');">
+    <button type="submit">Delete All</button>
+</form>
+</body>
+</html>
