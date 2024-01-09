@@ -22,7 +22,7 @@ public class MemoController {
     // Pageable 인터페이스는 페이징과 관련된 정보를 전달하는 데 사용되며, Spring Data JPA는 이를 이용하여 데이터베이스에서 데이터를
     // 페이지 단위로 가져오고 정렬하는 쿼리를 생성합니다.
     //
-    // 다음과 같은 메서드는 Pageable을 사용하여 페이징된 결과를 반환하는 메서드.
+    // 다음과 같은 메서드는 Pageable을 사용하여 페이징된 결과를 반환하는 메서드...
     @GetMapping("/memos")
     public String listMemos(@RequestParam(required = false) String keyword, @RequestParam(required = false, defaultValue = "desc") String order,
                             @RequestParam(defaultValue = "1") int page,
